@@ -2,6 +2,7 @@ import React from 'react';
 import {Alert, View} from 'react-native';
 import {styles} from './LoginStyles';
 
+import NameInput from '~/components/NameInput';
 import Button from '~/components/Button';
 
 const Login: React.FC = () => {
@@ -11,6 +12,7 @@ const Login: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <NameInput placeholder='Enter Name' />
       <Button text="Login" handlePress={handlePress} />
     </View>
   );

@@ -13,7 +13,10 @@ function App(): JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
           {isLoggedIn ? (
             <Stack.Screen name="Home" component={Home} />
           ) : (
