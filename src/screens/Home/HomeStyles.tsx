@@ -16,7 +16,8 @@ export const styles = StyleSheet.create({
     marginTop: 30
   },
   buttonContainer: {
+    height: 50,
     marginTop: 20,
-    flexDirection: "row-reverse"
+    flexDirection: "row-reverse",
   }
 });
