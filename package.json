@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "pods": "cd ios && pod install && cd .."
+    "pods": "cd ios && pod install && cd ..",
+    "metroClean": "npx react-native start --reset-cache"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.5.11",
@@ -20,6 +21,8 @@
     "react-native-gesture-handler": "^2.14.0",
     "react-native-safe-area-context": "^4.7.4",
     "react-native-screens": "^3.27.0",
+    "react-native-svg": "^14.1.0",
+    "react-native-svg-transformer": "^1.1.0",
     "react-redux": "^9.0.1"
   },
   "devDependencies": {

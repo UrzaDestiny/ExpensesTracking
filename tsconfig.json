@@ -1,9 +1,17 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
+    "esModuleInterop": true,
     "baseUrl": "./src",
     "paths": {
       "~/*": ["*"]
     }
   },
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts",
+  ],
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "typeRoots": ["./src/@types", "./node_modules/@types"],
 }

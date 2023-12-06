@@ -1,9 +1,22 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'white',
   },
+  headerText: {
+    fontFamily: 'ABeeZee',
+    fontSize: 17,
+    fontWeight: '400',
+    lineHeight: 20,
+    letterSpacing: 0,
+    textAlign: 'left',
+    marginLeft: 17,
+    marginTop: 30
+  },
+  buttonContainer: {
+    marginTop: 20,
+    flexDirection: "row-reverse"
+  }
 });
