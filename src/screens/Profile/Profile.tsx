@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { styles } from './ProfileStyles';
+import {View} from 'react-native';
+import {styles} from './ProfileStyles';
+import ExpensesCount from '~/components/ExpensesCount';
+import SignOut from '~/components/SignOut';
 
 const Profile: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text>This is Profile</Text>
+      <ExpensesCount />
+      <SignOut />
     </View>
   );
 };
-
 
 export default Profile;
