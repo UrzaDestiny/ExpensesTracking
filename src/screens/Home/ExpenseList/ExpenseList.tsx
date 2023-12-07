@@ -2,6 +2,8 @@ import React from 'react';
 import {View, Text, SectionList, TouchableOpacity} from 'react-native';
 import {styles} from './ExpenseListStyles';
 import XSvg from '~/assets/icons/X.svg';
+import { useSelector } from 'react-redux';
+import { selectExpenses } from '~/features/expenses/expensesSlice';
 
 interface Expense {
   name: string;
@@ -9,30 +11,9 @@ interface Expense {
   date: string;
 }
 
-const expenses: Expense[] = [
-  {name: 'Shopping', amount: 50, date: '2023-12-01'},
-  {name: 'Dining', amount: 30, date: '2023-12-02'},
-  {name: 'Groceries', amount: 20, date: '2023-12-01'},
-  {name: 'Utilities', amount: 40, date: '2023-12-03'},
-  {name: 'Entertainment', amount: 25, date: '2023-12-02'},
-  {name: 'Shopping', amount: 55, date: '2023-12-04'},
-  {name: 'Dining', amount: 35, date: '2023-12-05'},
-  {name: 'Groceries', amount: 15, date: '2023-12-01'},
-  {name: 'Utilities', amount: 42, date: '2023-12-03'},
-  {name: 'Entertainment', amount: 28, date: '2023-12-05'},
-  {name: 'Shopping', amount: 48, date: '2023-12-02'},
-  {name: 'Dining', amount: 32, date: '2023-12-04'},
-  {name: 'Groceries', amount: 18, date: '2023-12-01'},
-  {name: 'Utilities', amount: 38, date: '2023-12-03'},
-  {name: 'Entertainment', amount: 22, date: '2023-12-04'},
-  {name: 'Shopping', amount: 60, date: '2023-12-05'},
-  {name: 'Dining', amount: 36, date: '2023-12-02'},
-  {name: 'Groceries', amount: 25, date: '2023-12-04'},
-  {name: 'Utilities', amount: 45, date: '2023-12-03'},
-  {name: 'Entertainment', amount: 30, date: '2023-12-05'},
-];
-
 const ExpenseList: React.FC = () => {
+  const expenses = useSelector(selectExpenses);
+
   const groupedExpenses = expenses.reduce((result, expense) => {
     const existingGroup = result.find(group => group.date === expense.date);
 
