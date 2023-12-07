@@ -2,16 +2,12 @@ import React from 'react';
 import {View, Text, SectionList, TouchableOpacity} from 'react-native';
 import {styles} from './ExpenseListStyles';
 import XSvg from '~/assets/icons/X.svg';
-import { useSelector } from 'react-redux';
-import { selectExpenses } from '~/features/expenses/expensesSlice';
-
-interface Expense {
-  name: string;
-  amount: number;
-  date: string;
-}
+import {useDispatch, useSelector} from 'react-redux';
+import {selectExpenses, removeExpense} from '~/features/expenses/expensesSlice';
+import {Expense} from '~/types/types';
 
 const ExpenseList: React.FC = () => {
+  const dispatch = useDispatch();
   const expenses = useSelector(selectExpenses);
 
   const groupedExpenses = expenses.reduce((result, expense) => {
@@ -25,6 +21,10 @@ const ExpenseList: React.FC = () => {
 
     return result;
   }, [] as {date: string; data: Expense[]}[]);
+
+  const handleRemoveExpense = (id: string) => {
+    dispatch(removeExpense(id));
+  };
 
   return (
     <SectionList
@@ -41,7 +41,9 @@ const ExpenseList: React.FC = () => {
             styles.itemContainer,
             index === section.data.length - 1 && styles.noBorderBottom,
           ]}>
-          <TouchableOpacity style={styles.deleteButton}>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => handleRemoveExpense(item.id)}>
             <XSvg height={20} width={20} />
           </TouchableOpacity>
           <Text style={styles.itemName}>{item.name}</Text>
