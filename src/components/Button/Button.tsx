@@ -9,11 +9,9 @@ type ButtonProps = {
 
 const Button = ({text, handlePress}: ButtonProps) => {
   return (
-    <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
-    </View>
   );
 };
 
