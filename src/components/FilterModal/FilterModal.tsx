@@ -4,6 +4,8 @@ import {styles} from './FilterModalStyles';
 import XSvg from '~/assets/icons/X.svg';
 import CustomInput from '~/components/CustomInput';
 import Button from '~/components/Button';
+import {useDispatch} from 'react-redux';
+import {setDateFilter, setTitleFilter} from '~/features/expenses/expensesSlice';
 
 interface FilterModalProps {
   isModalVisible: boolean;
@@ -14,7 +16,22 @@ const FilterModal: React.FC<FilterModalProps> = ({
   isModalVisible,
   handleCloseModal,
 }) => {
-  const [title, setTitle] = useState('');
+  const [titleField, setTitleField] = useState('');
+  const [dateField, setDateField] = useState('');
+
+  const dispatch = useDispatch();
+
+  const handleFilterButton = () => {
+    dispatch(setTitleFilter(titleField));
+    dispatch(setDateFilter(dateField));
+    handleCloseModal();
+  };
+
+  const handleCleanButton = () => {
+    setTitleField('');
+    setDateField('');
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -26,7 +43,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
           <View style={styles.header}>
             <TouchableOpacity
               style={styles.clearButtonContainer}
-              onPress={handleCloseModal}>
+              onPress={handleCleanButton}>
               <Text style={styles.clearButton}>clean</Text>
             </TouchableOpacity>
             <View style={styles.headerTextContainer}>
@@ -41,17 +58,17 @@ const FilterModal: React.FC<FilterModalProps> = ({
           <View style={styles.inputFields}>
             <CustomInput
               placeholder="Title"
-              onChangeText={setTitle}
-              value={title}
+              onChangeText={setTitleField}
+              value={titleField}
             />
             <CustomInput
               placeholder="Date"
-              onChangeText={setTitle}
-              value={title}
+              onChangeText={setDateField}
+              value={dateField}
             />
           </View>
           <View style={styles.buttonContainer}>
-            <Button text="Filter" handlePress={handleCloseModal} />
+            <Button text="Filter" handlePress={handleFilterButton} />
           </View>
         </View>
       </View>

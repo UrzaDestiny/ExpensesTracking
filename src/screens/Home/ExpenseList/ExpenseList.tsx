@@ -3,14 +3,22 @@ import {View, Text, SectionList, TouchableOpacity} from 'react-native';
 import {styles} from './ExpenseListStyles';
 import XSvg from '~/assets/icons/X.svg';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectExpenses, removeExpense} from '~/features/expenses/expensesSlice';
+import {selectExpenses, selectFilters, removeExpense} from '~/features/expenses/expensesSlice';
 import {Expense} from '~/types/types';
 
 const ExpenseList: React.FC = () => {
   const dispatch = useDispatch();
   const expenses = useSelector(selectExpenses);
+  const filters = useSelector(selectFilters);
 
-  const groupedExpenses = expenses.reduce((result, expense) => {
+  const filteredExpenses = expenses.filter(expense => {
+    return (
+      (filters.title === '' || expense.name.includes(filters.title)) &&
+      (filters.date === '' || expense.date === filters.date)
+    );
+  });
+
+  const groupedExpenses = filteredExpenses.reduce((result, expense) => {
     const existingGroup = result.find(group => group.date === expense.date);
 
     if (existingGroup) {

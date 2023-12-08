@@ -4,6 +4,10 @@ import {Expense} from '~/types/types';
 
 interface ExpensesState {
   expenses: Expense[];
+  filters: {
+    title: string;
+    date: string;
+  };
 }
 
 const initialState: ExpensesState = {
@@ -29,6 +33,10 @@ const initialState: ExpensesState = {
     {id: '19', name: 'Utilities', amount: 45, date: '2023-12-03'},
     {id: '20', name: 'Entertainment', amount: 30, date: '2023-12-05'},
   ],
+  filters: {
+    title: '',
+    date: '',
+  },
 };
 
 const expensesSlice = createSlice({
@@ -52,9 +60,16 @@ const expensesSlice = createSlice({
         expense => expense.id !== action.payload,
       );
     },
+    setTitleFilter: (state, action) => {
+      state.filters.title = action.payload;
+    },
+    setDateFilter: (state, action) => {
+      state.filters.date = action.payload;
+    },
   },
 });
 
-export const {addExpense, editExpense, removeExpense} = expensesSlice.actions;
+export const {addExpense, editExpense, removeExpense, setTitleFilter, setDateFilter} = expensesSlice.actions;
 export const selectExpenses = (state: RootState) => state.expenses.expenses;
+export const selectFilters = (state: RootState) => state.expenses.filters;
 export default expensesSlice.reducer;
