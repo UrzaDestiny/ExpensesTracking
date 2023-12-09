@@ -1,23 +1,21 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {Provider} from 'react-redux';
-import store from './src/store/configureStore';
+import {PersistGate} from 'redux-persist/integration/react';
+import {store, persistor} from './src/store/configureStore';
 import AppNavigator from './src/navigation/AppNavigator';
 
-const Stack = createStackNavigator();
-
 function App(): JSX.Element {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
-      </SafeAreaView>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaView style={styles.container}>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </SafeAreaView>
+      </PersistGate>
     </Provider>
   );
 }
