@@ -4,7 +4,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import XSvg from '~/assets/icons/X.svg';
 import CustomInput from '~/components/CustomInput';
 import Button from '~/components/Button';
-import {addExpense, editExpense, selectExpenses} from '~/features/expenses/expensesSlice';
+import {
+  addExpense,
+  editExpense,
+  selectExpenses,
+} from '~/features/expenses/expensesSlice';
 import {generateRandomId} from '~/helpers/randomNumber';
 import {Expense} from '~/types/types';
 import {styles} from './AddEditModalStyles';
@@ -43,32 +47,40 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
 
   const setName = () => (type === 'create' ? 'Create' : 'Edit');
 
+  const createExpense = () => {
+    let newId: string;
+    do {
+      newId = generateRandomId(10);
+    } while (expenses.some(expense => expense.id === newId));
+
+    const newExpense: Expense = {
+      id: newId,
+      name: titleField,
+      amount: +amountField,
+      date: dateField,
+    };
+
+    dispatch(addExpense(newExpense));
+    handleCloseModal();
+  };
+
+  const handleEditExpense = (editingExpense: Expense) => {
+    const updatedExpense: Expense = {
+      ...editingExpense,
+      name: titleField,
+      amount: +amountField,
+      date: dateField,
+    };
+
+    dispatch(editExpense({id: editingExpense.id, updatedExpense}));
+    handleCloseModal();
+  }
+
   const handleButtonPress = () => {
     if (type === 'create') {
-      let newId: string;
-      do {
-        newId = generateRandomId(10);
-      } while (expenses.some((expense) => expense.id === newId));
-
-      const newExpense: Expense = {
-        id: newId,
-        name: titleField,
-        amount: +amountField,
-        date: dateField,
-      };
-
-      dispatch(addExpense(newExpense));
-      handleCloseModal();
+      createExpense();
     } else if (type === 'edit' && editingExpense) {
-      const updatedExpense: Expense = {
-        ...editingExpense,
-        name: titleField,
-        amount: +amountField,
-        date: dateField,
-      };
-
-      dispatch(editExpense({ id: editingExpense.id, updatedExpense }));
-      handleCloseModal();
+      handleEditExpense(editingExpense)
     }
   };
 
