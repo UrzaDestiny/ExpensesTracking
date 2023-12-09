@@ -3,10 +3,18 @@ import {View, Text, SectionList, TouchableOpacity} from 'react-native';
 import {styles} from './ExpenseListStyles';
 import XSvg from '~/assets/icons/X.svg';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectExpenses, selectFilters, removeExpense} from '~/features/expenses/expensesSlice';
+import {
+  selectExpenses,
+  selectFilters,
+  removeExpense,
+} from '~/features/expenses/expensesSlice';
 import {Expense} from '~/types/types';
 
-const ExpenseList: React.FC = () => {
+type ExpenseListProps = {
+  handleOpenEditModal: (item: Expense) => void;
+};
+
+const ExpenseList: React.FC<ExpenseListProps> = ({handleOpenEditModal}) => {
   const dispatch = useDispatch();
   const expenses = useSelector(selectExpenses);
   const filters = useSelector(selectFilters);
@@ -37,14 +45,15 @@ const ExpenseList: React.FC = () => {
   return (
     <SectionList
       sections={groupedExpenses}
-      keyExtractor={(item, index) => item.date + index.toString()}
+      keyExtractor={(item) => item.id}
       renderSectionHeader={({section}) => (
         <View style={styles.sectionHeader}>
           <Text style={styles.date}>{section.date}</Text>
         </View>
       )}
       renderItem={({item, index, section}) => (
-        <View
+        <TouchableOpacity
+          onLongPress={() => handleOpenEditModal(item)}
           style={[
             styles.itemContainer,
             index === section.data.length - 1 && styles.noBorderBottom,
@@ -56,7 +65,7 @@ const ExpenseList: React.FC = () => {
           </TouchableOpacity>
           <Text style={styles.itemName}>{item.name}</Text>
           <Text style={styles.itemAmount}>{`$${item.amount}`}</Text>
-        </View>
+        </TouchableOpacity>
       )}
     />
   );

@@ -50,10 +50,14 @@ const expensesSlice = createSlice({
     },
     editExpense: (
       state,
-      action: PayloadAction<{index: number; updatedExpense: Expense}>,
+      action: PayloadAction<{ id: string; updatedExpense: Expense }>,
     ) => {
-      const {index, updatedExpense} = action.payload;
-      state.expenses[index] = updatedExpense;
+      const { id, updatedExpense } = action.payload;
+      const index = state.expenses.findIndex((expense) => expense.id === id);
+    
+      if (index !== -1) {
+        state.expenses[index] = updatedExpense;
+      }
     },
     removeExpense: (state, action: PayloadAction<string>) => {
       state.expenses = state.expenses.filter(

@@ -7,11 +7,7 @@
       "~/*": ["*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.d.ts",
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
   "extends": "@tsconfig/react-native/tsconfig.json",
-  "typeRoots": ["./src/@types", "./node_modules/@types"],
+  "typeRoots": ["./src/@types", "./node_modules/@types"]
 }

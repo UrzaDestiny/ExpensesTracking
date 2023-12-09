@@ -1,24 +1,26 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Modal, TouchableOpacity} from 'react-native';
 import {styles} from './AddEditModalStyles';
 import XSvg from '~/assets/icons/X.svg';
 import CustomInput from '~/components/CustomInput';
 import Button from '~/components/Button';
 import {useDispatch, useSelector} from 'react-redux';
-import {addExpense, selectExpenses} from '~/features/expenses/expensesSlice';
+import {addExpense, editExpense, selectExpenses} from '~/features/expenses/expensesSlice';
 import {generateRandomId} from '~/helpers/randomNumber';
 import {Expense} from '~/types/types';
 
 interface AddEditModalProps {
-  isModalVisible: boolean;
-  handleCloseModal: () => void;
   type: 'create' | 'edit';
+  isModalVisible: boolean;
+  editingExpense?: Expense | null;
+  handleCloseModal: () => void;
 }
 
 const AddEditModal: React.FC<AddEditModalProps> = ({
-  isModalVisible,
-  handleCloseModal,
   type,
+  isModalVisible,
+  editingExpense,
+  handleCloseModal,
 }) => {
   const [titleField, setTitleField] = useState('');
   const [amountField, setAmountField] = useState('');
@@ -27,6 +29,18 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
   const dispatch = useDispatch();
   const expenses = useSelector(selectExpenses);
 
+  useEffect(() => {
+    if (editingExpense) {
+      setTitleField(editingExpense.name);
+      setAmountField(editingExpense.amount.toString());
+      setDateField(editingExpense.date);
+    } else {
+      setTitleField('');
+      setAmountField('');
+      setDateField('');
+    }
+  }, [editingExpense]);
+
   const setName = () => (type === 'create' ? 'Create' : 'Edit');
 
   const handleButtonPress = () => {
@@ -34,7 +48,7 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
       let newId: string;
       do {
         newId = generateRandomId(10);
-      } while (expenses.some(expense => expense.id === newId));
+      } while (expenses.some((expense) => expense.id === newId));
 
       const newExpense: Expense = {
         id: newId,
@@ -44,6 +58,16 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
       };
 
       dispatch(addExpense(newExpense));
+      handleCloseModal();
+    } else if (type === 'edit' && editingExpense) {
+      const updatedExpense: Expense = {
+        ...editingExpense,
+        name: titleField,
+        amount: +amountField,
+        date: dateField,
+      };
+
+      dispatch(editExpense({ id: editingExpense.id, updatedExpense }));
       handleCloseModal();
     }
   };
