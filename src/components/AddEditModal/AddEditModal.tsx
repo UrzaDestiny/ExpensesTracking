@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Modal, TouchableOpacity} from 'react-native';
-import {styles} from './AddEditModalStyles';
+import {useDispatch, useSelector} from 'react-redux';
 import XSvg from '~/assets/icons/X.svg';
 import CustomInput from '~/components/CustomInput';
 import Button from '~/components/Button';
-import {useDispatch, useSelector} from 'react-redux';
 import {addExpense, editExpense, selectExpenses} from '~/features/expenses/expensesSlice';
 import {generateRandomId} from '~/helpers/randomNumber';
 import {Expense} from '~/types/types';
+import {styles} from './AddEditModalStyles';
 
 interface AddEditModalProps {
   type: 'create' | 'edit';

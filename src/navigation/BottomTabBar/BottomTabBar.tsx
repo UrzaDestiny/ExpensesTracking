@@ -1,6 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {styles} from './BottomTabBarStyles';
-
 import Home from '~/screens/Home';
 import Profile from '~/screens/Profile';
 import RoundButton from '~/components/RoundButton';
@@ -48,7 +47,7 @@ const BottomTabBar = () => {
           component={Profile}
         />
       </Tab.Navigator>
-      <RoundButton onPress={() => setIsModalVisible(true)} />
+      <RoundButton handlePress={() => setIsModalVisible(true)} />
       <AddEditModal
         type="create"
         isModalVisible={isModalVisible}

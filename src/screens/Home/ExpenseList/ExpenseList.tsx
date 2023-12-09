@@ -9,6 +9,7 @@ import {
   removeExpense,
 } from '~/features/expenses/expensesSlice';
 import {Expense} from '~/types/types';
+import { getFilteredExpenses, groupExpensesByDate } from '~/helpers/expensesHelpers';
 
 type ExpenseListProps = {
   handleOpenEditModal: (item: Expense) => void;
@@ -19,24 +20,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({handleOpenEditModal}) => {
   const expenses = useSelector(selectExpenses);
   const filters = useSelector(selectFilters);
 
-  const filteredExpenses = expenses.filter(expense => {
-    return (
-      (filters.title === '' || expense.name.includes(filters.title)) &&
-      (filters.date === '' || expense.date === filters.date)
-    );
-  });
-
-  const groupedExpenses = filteredExpenses.reduce((result, expense) => {
-    const existingGroup = result.find(group => group.date === expense.date);
-
-    if (existingGroup) {
-      existingGroup.data.push(expense);
-    } else {
-      result.push({date: expense.date, data: [expense]});
-    }
-
-    return result;
-  }, [] as {date: string; data: Expense[]}[]);
+  const filteredExpenses = getFilteredExpenses(expenses, filters);
+  const groupedExpenses = groupExpensesByDate(filteredExpenses)
 
   const handleRemoveExpense = (id: string) => {
     dispatch(removeExpense(id));

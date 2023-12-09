@@ -6,7 +6,7 @@ import ExpenseList from './ExpenseList';
 import FilterModal from '~/components/FilterModal';
 import AddEditModal from '~/components/AddEditModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { hideModal, selectModalVisibility } from '~/features/expenses/modalSlice';
+import { hideModal, selectModalVisibility, showModal } from '~/features/expenses/modalSlice';
 import { selectExpenses } from '~/features/expenses/expensesSlice';
 import { Expense } from '~/types/types';
 
@@ -18,6 +18,10 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
   const isFilterModalVisible = useSelector(selectModalVisibility);
   const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
+
+  const handleFilterPress = () => {
+    dispatch(showModal());
+  };
 
   const handleCloseFilterModal = () => {
     dispatch(hideModal());
@@ -37,7 +41,7 @@ const Home: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.headerText}>{`Total Expenses: $${totalExpenses}`}</Text>
       <View style={styles.buttonContainer}>
-        <FilterButton />
+        <FilterButton onFilterButtonPress={handleFilterPress} />
       </View>
       <ExpenseList handleOpenEditModal={handleOpenEditModal} />
       <FilterModal isModalVisible={isFilterModalVisible} handleCloseModal={handleCloseFilterModal} />
