@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { TextInput, View, Animated } from 'react-native';
-import { styles } from './CustomInputStyles';
+import React, {useState, useEffect} from 'react';
+import {TextInput, View, Animated} from 'react-native';
+import {styles} from './CustomInputStyles';
 
 interface CustomInputProps {
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
+  type: 'text' | 'numbers';
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({ value, onChangeText, placeholder }) => {
+const CustomInput: React.FC<CustomInputProps> = ({
+  value,
+  onChangeText,
+  placeholder,
+  type,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const animatedValue = new Animated.Value(value ? 1 : 0);
 
@@ -48,6 +54,7 @@ const CustomInput: React.FC<CustomInputProps> = ({ value, onChangeText, placehol
         onChangeText={onChangeText}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        keyboardType={type === 'numbers' ? 'numeric' : 'default'}
       />
     </View>
   );

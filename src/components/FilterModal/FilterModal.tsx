@@ -60,11 +60,13 @@ const FilterModal: React.FC<FilterModalProps> = ({
               placeholder="Title"
               onChangeText={setTitleField}
               value={titleField}
+              type='text'
             />
             <CustomInput
               placeholder="Date"
               onChangeText={setDateField}
               value={dateField}
+              type='text'
             />
           </View>
           <View style={styles.buttonContainer}>

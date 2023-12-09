@@ -8,10 +8,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addExpense, selectExpenses} from '~/features/expenses/expensesSlice';
 import {Expense} from '~/types/types';
 import {generateRandomId} from '~/helpers/randomNumber';
+import {useState} from 'react';
+import AddEditModal from '~/components/AddEditModal';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabBar = () => {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const expenses = useSelector(selectExpenses);
   const dispatch = useDispatch();
 
@@ -52,7 +55,12 @@ const BottomTabBar = () => {
           component={Profile}
         />
       </Tab.Navigator>
-      <RoundButton onPress={handleAddExpense} />
+      <RoundButton onPress={() => setIsModalVisible(true)} />
+      <AddEditModal
+        type="create"
+        isModalVisible={isModalVisible}
+        handleCloseModal={() => setIsModalVisible(false)}
+      />
     </>
   );
 };
