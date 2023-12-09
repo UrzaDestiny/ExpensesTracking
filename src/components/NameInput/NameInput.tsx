@@ -4,13 +4,15 @@ import {styles} from './NameInputStyles';
 
 type NameInputProps = {
   placeholder: string;
+  onChangeText: (text: string) => void;
 };
 
-const NameInput = ({placeholder}: NameInputProps) => {
+const NameInput = ({placeholder, onChangeText}: NameInputProps) => {
   const [name, setName] = useState('');
 
   const handleNameChange = (text: string) => {
     setName(text);
+    onChangeText(text);
   };
 
   return (

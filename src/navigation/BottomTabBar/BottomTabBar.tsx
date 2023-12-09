@@ -4,13 +4,26 @@ import {styles} from './BottomTabBarStyles';
 import Home from '~/screens/Home';
 import Profile from '~/screens/Profile';
 import RoundButton from '~/components/RoundButton';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import AddEditModal from '~/components/AddEditModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabBar = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('');
+
+  useEffect(() => {
+    async function loadUserName() {
+      const storedUserName = await AsyncStorage.getItem('userName');
+      if (storedUserName) {
+        setUserName(storedUserName);
+      }
+    }
+
+    loadUserName();
+  }, []);
 
   return (
     <>
@@ -20,6 +33,8 @@ const BottomTabBar = () => {
         }}>
         <Tab.Screen
           options={{
+            title: userName,
+            tabBarLabel: 'Home',
             tabBarIcon: () => null,
           }}
           name="Home"
