@@ -52,7 +52,6 @@ const CustomInput: React.FC<CustomInputProps> = ({
       </Animated.Text>
       <TextInput
         onPressIn={onChangeDate}
-        editable={type === 'date' ? false : true}
         style={styles.textInput}
         value={value}
         onChangeText={onChangeText}

@@ -1,3 +1,4 @@
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {styles} from './BottomTabBarStyles';
 import Home from '~/screens/Home';
