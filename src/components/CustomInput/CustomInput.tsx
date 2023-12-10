@@ -39,7 +39,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
     }),
     fontSize: animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [18, 14],
+      outputRange: [18, 12],
     }),
   };
 
