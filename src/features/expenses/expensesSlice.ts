@@ -49,7 +49,7 @@ const expensesSlice = createSlice({
     setDateFilter: (state, action) => {
       state.filters.date = action.payload;
     },
-    setInitialState: (state) => {
+    setInitialState: state => {
       return initialState;
     },
   },
@@ -61,7 +61,7 @@ export const {
   removeExpense,
   setTitleFilter,
   setDateFilter,
-  setInitialState
+  setInitialState,
 } = expensesSlice.actions;
 export const selectExpenses = (state: RootState) => state.expenses.expenses;
 export const selectFilters = (state: RootState) => state.expenses.filters;

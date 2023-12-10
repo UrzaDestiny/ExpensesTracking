@@ -21,7 +21,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({handleOpenEditModal}) => {
   const filters = useSelector(selectFilters);
 
   const filteredExpenses = getFilteredExpenses(expenses, filters);
-  const groupedExpenses = groupExpensesByDate(filteredExpenses)
+  const groupedExpenses = groupExpensesByDate(filteredExpenses);
 
   const handleRemoveExpense = (id: string) => {
     dispatch(removeExpense(id));

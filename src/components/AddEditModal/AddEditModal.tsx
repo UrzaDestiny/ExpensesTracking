@@ -12,6 +12,7 @@ import {
 import {generateRandomId} from '~/helpers/randomNumber';
 import {Expense} from '~/types/types';
 import {styles} from './AddEditModalStyles';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 interface AddEditModalProps {
   type: 'create' | 'edit';
@@ -29,6 +30,7 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
   const [titleField, setTitleField] = useState('');
   const [amountField, setAmountField] = useState('');
   const [dateField, setDateField] = useState('');
+  const [isDatePickerShow, setIsDatePickerShow] = useState(false);
 
   const dispatch = useDispatch();
   const expenses = useSelector(selectExpenses);
@@ -59,7 +61,6 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
       amount: +amountField,
       date: dateField,
     };
-
     dispatch(addExpense(newExpense));
     handleCloseModal();
   };
@@ -74,13 +75,21 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
 
     dispatch(editExpense({id: editingExpense.id, updatedExpense}));
     handleCloseModal();
-  }
+  };
 
   const handleButtonPress = () => {
     if (type === 'create') {
       createExpense();
     } else if (type === 'edit' && editingExpense) {
-      handleEditExpense(editingExpense)
+      handleEditExpense(editingExpense);
+    }
+  };
+
+  const onChangeDate = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
+    if (selectedDate) {
+      const currentDate = selectedDate;
+      setIsDatePickerShow(false);
+      setDateField(currentDate.toLocaleDateString('en-GB'));
     }
   };
 
@@ -115,12 +124,24 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
               value={amountField}
               type="numbers"
             />
-            <CustomInput
-              placeholder="Date"
-              onChangeText={setDateField}
-              value={dateField}
-              type="text"
-            />
+            {isDatePickerShow ? (
+              <View style={styles.datePickerContainer}>
+                <DateTimePicker
+                  style={{flex: 1}}
+                  value={new Date}
+                  mode="date"
+                  onChange={onChangeDate}
+                />
+              </View>
+            ) : (
+              <TouchableOpacity onPress={() => setIsDatePickerShow(true)}>
+                <CustomInput
+                  placeholder="Date"
+                  value={dateField}
+                  type="date"
+                />
+              </TouchableOpacity>
+            )}
           </View>
           <View style={styles.buttonContainer}>
             <Button text={setName()} handlePress={handleButtonPress} />
