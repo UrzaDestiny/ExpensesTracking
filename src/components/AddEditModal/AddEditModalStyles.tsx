@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   datePickerContainer: {
-    height: 44,
+    height: 54,
     alignItems: 'center',
   },
 });

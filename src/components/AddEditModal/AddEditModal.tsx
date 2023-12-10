@@ -12,7 +12,9 @@ import {
 import {generateRandomId} from '~/helpers/randomNumber';
 import {Expense} from '~/types/types';
 import {styles} from './AddEditModalStyles';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 
 interface AddEditModalProps {
   type: 'create' | 'edit';
@@ -85,7 +87,10 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
     }
   };
 
-  const onChangeDate = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
+  const onChangeDate = (
+    event: DateTimePickerEvent,
+    selectedDate: Date | undefined,
+  ) => {
     if (selectedDate) {
       const currentDate = selectedDate;
       setIsDatePickerShow(false);
@@ -128,19 +133,18 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
               <View style={styles.datePickerContainer}>
                 <DateTimePicker
                   style={{flex: 1}}
-                  value={new Date}
+                  value={new Date()}
                   mode="date"
                   onChange={onChangeDate}
                 />
               </View>
             ) : (
-              <TouchableOpacity onPress={() => setIsDatePickerShow(true)}>
-                <CustomInput
-                  placeholder="Date"
-                  value={dateField}
-                  type="date"
-                />
-              </TouchableOpacity>
+              <CustomInput
+                placeholder="Date"
+                value={dateField}
+                type="date"
+                onChangeDate={() => setIsDatePickerShow(true)}
+              />
             )}
           </View>
           <View style={styles.buttonContainer}>

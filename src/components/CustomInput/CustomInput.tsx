@@ -5,6 +5,7 @@ import {styles} from './CustomInputStyles';
 interface CustomInputProps {
   value: string;
   onChangeText?: (text: string) => void;
+  onChangeDate?: () => void;
   placeholder?: string;
   type: 'text' | 'numbers' | 'date';
 }
@@ -12,6 +13,7 @@ interface CustomInputProps {
 const CustomInput: React.FC<CustomInputProps> = ({
   value,
   onChangeText,
+  onChangeDate,
   placeholder,
   type,
 }) => {
@@ -49,6 +51,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
         {placeholder}
       </Animated.Text>
       <TextInput
+        onPressIn={onChangeDate}
         editable={type === 'date' ? false : true}
         style={styles.textInput}
         value={value}

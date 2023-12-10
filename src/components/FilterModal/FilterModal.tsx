@@ -6,7 +6,9 @@ import CustomInput from '~/components/CustomInput';
 import Button from '~/components/Button';
 import {useDispatch} from 'react-redux';
 import {setDateFilter, setTitleFilter} from '~/features/expenses/expensesSlice';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 
 interface FilterModalProps {
   isModalVisible: boolean;
@@ -34,7 +36,10 @@ const FilterModal: React.FC<FilterModalProps> = ({
     setDateField('');
   };
 
-  const onChangeDate = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
+  const onChangeDate = (
+    event: DateTimePickerEvent,
+    selectedDate: Date | undefined,
+  ) => {
     if (selectedDate) {
       const currentDate = selectedDate;
       setIsDatePickerShow(false);
@@ -70,25 +75,24 @@ const FilterModal: React.FC<FilterModalProps> = ({
               placeholder="Title"
               onChangeText={setTitleField}
               value={titleField}
-              type='text'
+              type="text"
             />
             {isDatePickerShow ? (
               <View style={styles.datePickerContainer}>
                 <DateTimePicker
                   style={{flex: 1}}
-                  value={new Date}
+                  value={new Date()}
                   mode="date"
                   onChange={onChangeDate}
                 />
               </View>
             ) : (
-              <TouchableOpacity onPress={() => setIsDatePickerShow(true)}>
-                <CustomInput
-                  placeholder="Date"
-                  value={dateField}
-                  type="date"
-                />
-              </TouchableOpacity>
+              <CustomInput
+                placeholder="Date"
+                value={dateField}
+                type="date"
+                onChangeDate={() => setIsDatePickerShow(true)}
+              />
             )}
           </View>
           <View style={styles.buttonContainer}>
