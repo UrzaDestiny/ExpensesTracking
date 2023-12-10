@@ -23,8 +23,7 @@ const expensesSlice = createSlice({
   initialState,
   reducers: {
     addExpense: (state, action: PayloadAction<Expense>) => {
-      const id = (state.expenses.length + 1).toString();
-      const newExpense = {...action.payload, id};
+      const newExpense = {...action.payload};
       state.expenses.push(newExpense);
     },
     editExpense: (

@@ -9,7 +9,6 @@ import {
   editExpense,
   selectExpenses,
 } from '~/features/expenses/expensesSlice';
-import {generateRandomId} from '~/helpers/randomNumber';
 import {Expense} from '~/types/types';
 import {styles} from './AddEditModalStyles';
 import DateTimePicker, {
@@ -54,7 +53,7 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
   const createExpense = () => {
     let newId: string;
     do {
-      newId = generateRandomId(10);
+      newId = Date.now().toString();
     } while (expenses.some(expense => expense.id === newId));
 
     const newExpense: Expense = {
