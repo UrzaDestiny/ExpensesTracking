@@ -51,8 +51,14 @@ export const styles = StyleSheet.create({
   },
   closeButtonContainer: {
     flex: 1,
-    flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  closeButton: {
+    height: 30,
+    width: 30,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   inputFields: {
@@ -66,5 +72,5 @@ export const styles = StyleSheet.create({
   datePickerContainer: {
     height: 54,
     alignItems: 'center',
-  },
+  }
 });

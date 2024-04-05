@@ -106,11 +106,13 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
       <View style={styles.container}>
         <View style={styles.content}>
           <View style={styles.header}>
-            <TouchableOpacity
-              style={styles.closeButtonContainer}
-              onPress={handleCloseModal}>
-              <XSvg height={24} width={24} />
-            </TouchableOpacity>
+            <View style={styles.closeButtonContainer}>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={handleCloseModal}>
+                <XSvg height={24} width={24} />
+              </TouchableOpacity>
+            </View>
             <View style={styles.headerTextContainer}>
               <Text style={styles.headerText}>{`${setName()} Expense`}</Text>
             </View>

@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 10,
-    paddingTop: 28,
     fontSize: 16,
   },
   placeholderColor: {
